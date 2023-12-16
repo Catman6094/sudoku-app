@@ -101,20 +101,20 @@ class MarkedGrid:
         
     
     def __str__(self) -> str:
-        result = "+-----+-----+-----+ +-----+-----+-----+ +-----+-----+-----+\n"
+        result = "+---------+---------+---------+ +---------+---------+---------+ +---------+---------+---------+\n"
         for row in range(9):
-            for d_row in range(3):
+            result += '|'
+            for col in range(9):
+                cell = 9*row + col
+                if cell in self.solved_cells:
+                    result += f'   ({next(iter(self.grid[cell]))})   '
+                else:
+                    result += f"{''.join(map(str, sorted(self.grid[cell]))):^9}"
                 result += '|'
-                for col in range(9):
-                    for d_col in range(3):
-                        d = d_row * 3 + d_col + 1
-                        result += str(d) if d in self.grid[9*row+col] else ' '
-                        if d_col != 2: result += ' '
-                    result += '|'
-                    if col in [2, 5]: result += ' |'
-                result += '\n'
-            result += "+-----+-----+-----+ +-----+-----+-----+ +-----+-----+-----+\n"
-            if row in [2, 5]: result += "+-----+-----+-----+ +-----+-----+-----+ +-----+-----+-----+\n"
+                if col in [2, 5]: result += ' |'
+            result += '\n'
+            result += "+---------+---------+---------+ +---------+---------+---------+ +---------+---------+---------+\n"
+            if row in [2, 5]: result += "+---------+---------+---------+ +---------+---------+---------+ +---------+---------+---------+\n"
         return result
 
 grid = [0,3,4,6,7,0,0,0,0,
